@@ -1,10 +1,10 @@
 
-ThisBuild/version := "0.4.1"
+ThisBuild/version := "0.4.2-LOCAL"
 ThisBuild/versionScheme := Some("semver-spec")
 
 lazy val commonSettings = Seq(
   organization := "com.github.rssh",
-  scalaVersion := "2.13.5"
+  scalaVersion := "2.12.14"
 )
 
 
@@ -43,7 +43,7 @@ lazy val example = project.in(file("example")).
                            fork := true,
                            libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.7" % "test",
                            // test assembly here:
-                           javaOptions += s"-javaagent:../agent/target/scala-2.13/trackedfuture_2.13-${version.value}.jar"
+                           javaOptions += s"-javaagent:../agent/target/scala-2.12/trackedfuture_2.12-${version.value}.jar"
                            // test published assembly:
                            //javaOptions += s"""-javaagent:${System.getProperty("user.home")}/.ivy2/local/com.github.rssh/trackedfuture_2.11/${version.value}/jars/trackedfuture_2.11-assembly.jar"""
                          ).
