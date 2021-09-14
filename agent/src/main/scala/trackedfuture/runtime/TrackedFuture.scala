@@ -38,6 +38,8 @@ object TrackedFuture {
     future
   }
 
+  // The presence of hooks for all the methods below implies that we can end up executing
+  // these in some other thread besides the thread made above in apply()
   def onComplete[T, U](future: Future[T], f: Try[T] => U)(implicit executor: ExecutionContext): Unit = {
     val trace = Thread.currentThread.getStackTrace
     val prevTrace = new StackTraces(trace, ThreadTrace.prevTraces.value)
@@ -120,6 +122,9 @@ object TrackedFuture {
     override def apply(x: A): B = trackedCall(pf(x), prevTrace)
   }
 
+  // This is the meat and potatos of the thing
+  // run the body in a try block, catch and re-throw exceptions after merging
+  // in the ancestor traces
   private def trackedCall[A](body: => A, prevTrace: StackTraces): A = {
     ThreadTrace.setPrev(prevTrace)
     try {

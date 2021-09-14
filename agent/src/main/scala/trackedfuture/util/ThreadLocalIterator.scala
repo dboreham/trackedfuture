@@ -3,6 +3,9 @@ package trackedfuture.util
 import scala.collection.JavaConverters._
 import scala.collection.mutable.ListBuffer
 
+// zero comments : wtf
+// this code looks to be creating an iterator onto the contents of 
+// the set of TLS keys for our class on the current live threads
 class ThreadLocalIterator[A](clazz: Class[A]) extends Iterable[A]{
 
 
@@ -11,6 +14,7 @@ class ThreadLocalIterator[A](clazz: Class[A]) extends Iterable[A]{
   private def getInternalMap: Iterator[A] = {
 
     val bufferList = new ListBuffer[A]
+    // note : inheritableThreadLocals implies that we rely on TLS inheritance
     val threadField = classOf[Thread].getDeclaredField("inheritableThreadLocals")
     threadField.setAccessible(true)
 
