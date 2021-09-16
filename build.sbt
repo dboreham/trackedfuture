@@ -1,5 +1,5 @@
 
-ThisBuild/version := "0.5.0"
+ThisBuild/version := "0.5.0-SNAPSHOT"
 ThisBuild/versionScheme := Some("semver-spec")
 
 lazy val commonSettings = Seq(
